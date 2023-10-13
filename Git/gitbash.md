@@ -57,13 +57,35 @@ git mv myfile.py new_directory
 
 ## Merge
 
+Check current branch:
+```bash
 git branch
+```
 
-\* new-branch
+Current brunch is new-branch:
+```
+* new-branch
 master
+```
 
+Let's switch to master branch:
+```bash
 git switch master
+```
+
 
 git pull origin master
 
 git merge new-branch
+
+
+
+## Remove something from index
+
+```Bash
+git rm file-name
+```
+
+```Bash
+git rm -f file-name
+```
