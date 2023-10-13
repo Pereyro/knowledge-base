@@ -1,6 +1,13 @@
 # Git bash
 
+## Table of contents
 
+* [Branch](#branch)
+* [Index](#index)
+  * [Add to index](#add)
+  * [Removed from index](#remove)
+
+<a id="branch"></a>
 ## Branch
 
 ### Add new branch
