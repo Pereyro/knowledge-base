@@ -2,6 +2,7 @@
 
 ## Table of contents
 	
+* [Туториал по созданию и настройке локального сервера](#)
 	* [Инструкция по начальной настройке Ubuntu](#local_server_setup)
 	* [Установка и настройка Python](#python_setup)
 		* [Установка Flask в вирутальную среду](#flask_setup)
@@ -11,12 +12,13 @@
 
 <a id="local_server_setup"></a>
 ### Инструкция по начальной настройке Ubuntu
-1. Скачиваем VirtualBox с официального сайта:
-https://www.virtualbox.org/wiki/Downloads
+1. [Скачиваем VirtualBox с официального сайта](https://www.virtualbox.org/wiki/Downloads)
+
 Ткнул в windows hosts
 
-2. Скачаем убунту сервер:
-https://ubuntu.com/download/server
+2. [Скачаем убунту сервер](https://ubuntu.com/download/server)
+
+Скачал версию 20.04
 
 3. Запускаем VirtualBox.
 	Ставится автоматически, просто прокликали next.
@@ -117,16 +119,25 @@ sudo servise ssh restart
 	
 	
 
-3.	sudo apt install python3-pip python3-dev build-essential libssl-dev libffi-dev python3-setuptools
+3.	Устанавливаем python
+```
+sudo apt install python3-pip python3-dev build-essential libssl-dev libffi-dev python3-setuptools
+```
 
 	Система однократно спросит, хочу ли я продолжить, а потом выскочит всплывающее окошко на фоне цвета фуксии и предложит ребутнуть несколько сервисов
 	Табом переходишь на кнопку ок и энтр
 
 
+<a id="flask_setup"></a>
+#### Установка Flask в вирутальную среду
+```
 sudo apt install python3-venv
 
 mkdir ~/myproject
+
 cd myproject
+```
+
 Создайте виртуальную среду для хранения требований Python для вашего проекта Flask, введя следующую команду:
 python3 -m venv myvenv
 Локальные копии Python и pip будут установлены в каталог myvenv в каталоге вашего проекта. Прежде чем устанавливать приложения в виртуальной среде, ее нужно активировать. Для этого нужно ввести следующую команду:
@@ -135,10 +146,6 @@ source myvenv/bin/activate
 
 Для деактивации надо набрать: deactivate
 
-
-
-<a id="flask_setup"></a>
-#### Установка Flask в вирутальную среду
 1.3 Загрузка Flask
 Вначале мы установим wheel с локальным экземпляром pip, чтобы убедиться, что наши пакеты будут устанавливаться даже при отсутствии архивов wheel:
 pip install wheel
@@ -170,6 +177,7 @@ pip install flask
 
 Dockerfile
 #### вариант 1
+```
 FROM python:3.10.6
 
 COPY . ./webapp
@@ -183,10 +191,12 @@ COPY ./webapp/webservice.py /tmp/
 EXPOSE 5000
 
 
-
 CMD ["python3", "/tmp/webservice.py"]
+```
+
 
 #### вариант 2
+```
 FROM python
 
 RUN mkdir /service
@@ -198,3 +208,4 @@ RUN python -m pip install -r /service/etc/requirements.txt
 
 EXPOSE 50000
 ENTRYPOINT [ "python", "webservice.py" ]
+```
