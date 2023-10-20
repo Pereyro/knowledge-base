@@ -12,15 +12,18 @@
 
 <a id="local_server_setup"></a>
 ### Инструкция по начальной настройке Ubuntu
-1. [Скачиваем VirtualBox с официального сайта](https://www.virtualbox.org/wiki/Downloads)
+В данной инструкции постараюсь описать шаги, которые я делаю, для зодания инфраструктуры для моего pet проекта.
+
+#### 1. [Скачиваем VirtualBox с официального сайта](https://www.virtualbox.org/wiki/Downloads)
 
 Ткнул в windows hosts
 
-2. [Скачаем убунту сервер](https://ubuntu.com/download/server)
+#### 2. [Скачаем убунту сервер](https://ubuntu.com/download/server)
 
 Скачал версию 20.04
 
-3. Запускаем VirtualBox.
+#### 3. Запускаем VirtualBox.
+
 	Ставится автоматически, просто прокликали next.
 	Запустили, переходим во вкладку "файл" -> "менеджер сетей хоста"
 	Должно открыться окошко, где будут 
@@ -29,26 +32,28 @@
 	Если покликать по названию выскочит: IPv4 192.168.56.1
 	Маска подсети: 255.255.255.0
 	
-Жмем создать. Вибираем 
+	Жмем создать. Вибираем 
 		
-4. При попытке запуска падает с ошибкой:
-	
-		Failed to open/create the internal network 'HostInterfaceNetworking-VirtualBox Host-Only Ethernet Adapter' (VERR_INTNET_FLT_IF_NOT_FOUND).
-		Failed to attach the network LUN (VERR_INTNET_FLT_IF_NOT_FOUND).
-		Код ошибки: 
-		E_FAIL (0x80004005)
-		Компонент: 
-		ConsoleWrap
-		Интерфейс: 
-		IConsole {872da645-4a9b-1727-bee2-5585105b9eed}
+#### 4. При попытке запуска падает с ошибкой:
 
+```
+Failed to open/create the internal network 'HostInterfaceNetworking-VirtualBox Host-Only Ethernet Adapter' (VERR_INTNET_FLT_IF_NOT_FOUND).
+Failed to attach the network LUN (VERR_INTNET_FLT_IF_NOT_FOUND).
+Код ошибки: 
+E_FAIL (0x80004005)
+Компонент: 
+ConsoleWrap
+Интерфейс: 
+IConsole {872da645-4a9b-1727-bee2-5585105b9eed}
+```
 
 	Полез в настройки:
 	Device Manager -> Network Adapters -> Virtual Box Host-Only Ethernet Adapter ->  Driver -> update driver
 
 	Вроде всё работает)
 
-5. Запускаем установку ubuntu 20.04 LT Server
+#### 5. Запускаем установку ubuntu 20.04 LT Server
+
 	Везде кликаем done
 	Когда предложит установить ли ssh выбираем да, и жмем done
 	Во всплывающем окошке continue 
@@ -56,14 +61,19 @@
 	Надо будет отключить привод когда система попросить рестарта 
 
 
-6. Настройка пароля для sudo:
+#### 6. Настройка пароля для sudo:
+	
+```bash
+:/$ sudo passwd
+```
 
-	:/$ sudo passwd
 	Потом трижды вводим: СамыйСекретныйПароль
 	Ну или какой-то другой секретный пароль
 
-7. Надо раскоментить строку в файле sshd_config и заменить значение:
-	sudo nano /etc/ssh/sshd_config
+#### 7. Надо раскоментить строку в файле sshd_config и заменить значение:
+```bash
+sudo nano /etc/ssh/sshd_config
+```
 	
 	Было:
 	
@@ -71,34 +81,49 @@
 	
 	Ctrl + X -> Yes -> Enter
 
-8. 
-	:/$ ifconfig 
-	или
-	:/$ ip address
+#### 8. 
+Запускаем команду:
+```bash
+:/$ ifconfig 
+```
+или
+```bash
+:/$ ip address
+```
 
 	Здесь мы видим, что есть три интерфейса: 
-		lo — локальная петля, 
-		enp0s3 — это «Адаптер 1» который у нас настроен как NAT (через него идет интернет-трафик в Ubuntu) 
-		и, наконец, 
-		enp0s8 — это и есть вышеупомянутый «Адаптер 2» («Виртуальный адаптер хоста»). Теперь осталось его настроить.
+	
+- lo — локальная петля, 
+- enp0s3 — это «Адаптер 1» который у нас настроен как NAT (через него идет интернет-трафик в Ubuntu) 
+- enp0s8 — это и есть вышеупомянутый «Адаптер 2» («Виртуальный адаптер хоста»). Теперь осталось его настроить.
 	
 	Если ifconfig не установлен (считается старой технологией, в новых версиях установлен ip)
-		sudo apt install net-tools
-		ifcongig enp0s8
 
-		sudo ifcongig enp0s8 192.168.56.101
-		
+```bash
+sudo apt install net-tools
+
+ifcongig enp0s8
+
+sudo ifcongig enp0s8 192.168.56.101
+```	
 		Ссылка почитать:
 		https://habr.com/ru/post/324016/?ysclid=l8k2zdzhm354537489
 
 	Можно ifconfig заменить на ip address ... но что точно не выяснил пока
 	ifcongig устаревшая технология, сейчас надо использовать ip
 
-9. Перезапускаем ssh:
+#### 9. Перезапускаем ssh:
+```bash
 sudo servise ssh restart
+```
 
-10. Теперь можем коннектиться через winscp:
-
+#### 10. Теперь можем коннектиться через winscp:
+- Открываем winscp
+- Создаем новое подключение
+- host: тот, что указали рание в команде ifconfig: *192.168.56.101*
+- port: 22
+- user: тот который указали при устновке Ubuntu
+- passwd: тот самый сверх секретный пароль
 
 
 
