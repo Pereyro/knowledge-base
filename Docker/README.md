@@ -43,6 +43,10 @@ docker image ls
 docker rmi image_id
 ```
 
+```sh
+docker image rm $(docker image ls -f dangling=true -q)
+```
+
 #### create docker image
 ```bash
 docker build -t your_image_name .
