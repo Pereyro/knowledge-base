@@ -12,6 +12,11 @@
 <a id="docker"></a>
 ## Docker
 
+Some usefull commands:
+```sh
+docker system df
+```
+
 <a id="install_docker"></a>
 ### install Docker
 
