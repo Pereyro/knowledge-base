@@ -13,3 +13,10 @@ wc - это утилита для подсчета количества стро
 ```bash
 wc -l myfile.txt
 ```
+
+<a id="find"></a>
+### FIND
+
+```
+find / -name file_name
+```
