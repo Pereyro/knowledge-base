@@ -76,10 +76,16 @@ sudo nano /etc/ssh/sshd_config
 ```
 	
 	Было:
-	
+```	
+#PermitRootLogin prohibit-password
+```
+
 	Стало:
+```
+PermitRootLogin yes
+```
 	
-	Ctrl + X -> Yes -> Enter
+Ctrl + X -> Yes -> Enter
 
 #### 8. 
 Запускаем команду:
@@ -114,7 +120,7 @@ sudo ifcongig enp0s8 192.168.56.101
 
 #### 9. Перезапускаем ssh:
 ```bash
-sudo servise ssh restart
+sudo service ssh restart
 ```
 
 #### 10. Теперь можем коннектиться через winscp:
