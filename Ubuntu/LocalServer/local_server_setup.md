@@ -76,12 +76,25 @@ sudo nano /etc/ssh/sshd_config
 ```
 	
 	Было:
-	
-	Стало:
-	
-	Ctrl + X -> Yes -> Enter
+```	
+#PermitRootLogin prohibit-password
+```
 
-#### 8. 
+	Стало:
+```
+PermitRootLogin yes
+```
+	
+Ctrl + X -> Yes -> Enter
+
+#### 8. Перезапускаем ssh:
+```bash
+sudo service ssh restart
+```
+
+
+#### 8. Настроим виртуальный адаптер хоста. 
+
 Запускаем команду:
 ```bash
 :/$ ifconfig 
@@ -97,7 +110,9 @@ sudo nano /etc/ssh/sshd_config
 - enp0s3 — это «Адаптер 1» который у нас настроен как NAT (через него идет интернет-трафик в Ubuntu) 
 - enp0s8 — это и есть вышеупомянутый «Адаптер 2» («Виртуальный адаптер хоста»). Теперь осталось его настроить.
 	
-	Если ifconfig не установлен (считается старой технологией, в новых версиях установлен ip)
+**Используя ifconfig:**
+Если ifconfig не установлен (считается старой технологией, в новых версиях установлен ip)
+
 
 ```bash
 sudo apt install net-tools
@@ -109,13 +124,16 @@ sudo ifcongig enp0s8 192.168.56.101
 		Ссылка почитать:
 		https://habr.com/ru/post/324016/?ysclid=l8k2zdzhm354537489
 
-	Можно ifconfig заменить на ip address ... но что точно не выяснил пока
-	ifcongig устаревшая технология, сейчас надо использовать ip
 
-#### 9. Перезапускаем ssh:
-```bash
-sudo servise ssh restart
+**Используя ip:**
+	
 ```
+sudo ip address add 192.168.56.101/24 brd 192.168.56.255 dev enp0s8
+
+sudo ip link set dev enp0s8 up
+```
+
+
 
 #### 10. Теперь можем коннектиться через winscp:
 - Открываем winscp
