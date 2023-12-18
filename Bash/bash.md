@@ -20,3 +20,10 @@ wc -l myfile.txt
 ```
 find / -name file_name
 ```
+
+
+
+Прикольная команда, пока не разобрался, что к чему:
+```
+sudo du -a -h --max-depth=1 | sort -hr
+```
